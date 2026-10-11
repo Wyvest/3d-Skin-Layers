@@ -52,6 +52,8 @@ public class CustomHeadLayerMixin<T extends LivingEntity, M extends EntityModel 
     private void resolveSkullRenderType(
             net.minecraft.client.renderer.entity.state.LivingEntityRenderState livingEntityRenderState,
             net.minecraft.world.level.block.SkullBlock.Type type, CallbackInfoReturnable<RenderType> ci) {
+        if (!SkinLayersModBase.config.enableSkulls)
+            return;
         if (Minecraft.getInstance().player != null
                 && GeneralUtil.getCameraEntity()/*? >= 1.21.11 {*/ .position() /*?} else {*/ /*.getPosition(0f) *//*?}*/
                         .distanceToSqr(livingEntityRenderState.x, livingEntityRenderState.y,
@@ -85,7 +87,8 @@ public class CustomHeadLayerMixin<T extends LivingEntity, M extends EntityModel 
          }
      //? if >= 1.21.4 {
     
-         if ((!livingEntityRenderState.headItem.isEmpty() || livingEntityRenderState.wornHeadType != null)
+         if (SkinLayersModBase.config.enableSkulls
+                  && (!livingEntityRenderState.headItem.isEmpty() || livingEntityRenderState.wornHeadType != null)
                   && livingEntityRenderState.wornHeadProfile != null
                   && livingEntityRenderState.wornHeadProfile.isResolved()) {
               GameProfile gameProfile = livingEntityRenderState.wornHeadProfile.gameProfile();

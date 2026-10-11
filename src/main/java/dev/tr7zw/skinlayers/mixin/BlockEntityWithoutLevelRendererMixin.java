@@ -9,6 +9,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import dev.tr7zw.skinlayers.SkinLayersModBase;
 import dev.tr7zw.skinlayers.SkinUtil;
 import dev.tr7zw.skinlayers.SkullRendererCache.ItemSettings;
 import dev.tr7zw.skinlayers.accessor.SkullSettings;
@@ -20,8 +21,6 @@ import net.minecraft.world.item.ItemStack;
  import com.mojang.authlib.GameProfile;
  import com.mojang.blaze3d.vertex.PoseStack;
  import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
- import dev.tr7zw.skinlayers.SkinLayersModBase;
- import dev.tr7zw.skinlayers.SkullRendererCache.ItemSettings;
  import net.minecraft.client.renderer.MultiBufferSource;
 
  //? if >= 1.19.4 {
@@ -51,6 +50,8 @@ public class BlockEntityWithoutLevelRendererMixin {
         /*
          CallbackInfoReturnable<net.minecraft.client.renderer.special.PlayerHeadSpecialRenderer.PlayerHeadRenderInfo> cir) {
         *///? }
+        if (!SkinLayersModBase.config.enableSkullsItems)
+            return;
         var profile = ItemUtil.getGameProfile(itemStack);
         if (profile != null) {
             lastSkull = (SkullSettings) itemCache.computeIfAbsent(profile, it -> new ItemSettings());
